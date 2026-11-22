@@ -1,0 +1,72 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <a href="{% url 'teacher_dashboard' %}"
+       class="btn btn-secondary mb-3">
+        Back to Dashboard
+    </a>
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-primary text-center mb-4">
+            Teacher Weekly Timetable
+        </h2>
+
+        <h5 class="mb-3">
+            Teacher: {{ request.user.username }}
+        </h5>
+
+        {% if timetable %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover text-center">
+
+                <thead class="table-primary">
+                    <tr>
+                        <th>Day</th>
+                        <th>Subject</th>
+                        <th>Classroom</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in timetable %}
+
+                    <tr>
+                        <td>{{ item.get_day_display }}</td>
+                        <td>{{ item.subject.name }}</td>
+                        <td>{{ item.classroom.name }}</td>
+                        <td>{{ item.start_time|time:"h:i A" }}</td>
+                        <td>{{ item.end_time|time:"h:i A" }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-info text-center">
+            No timetable assigned to you yet.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+

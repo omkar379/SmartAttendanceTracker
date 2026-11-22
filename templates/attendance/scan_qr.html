@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4 text-center">
+
+        <h2 class="text-primary mb-3">
+            QR Code Attendance
+        </h2>
+
+        {% if success %}
+
+            <div class="alert alert-success">
+                <h4>Attendance Marked Successfully!</h4>
+                Your attendance has been recorded.
+            </div>
+
+        {% elif already_marked %}
+
+            <div class="alert alert-warning">
+                Your attendance has already been marked for this session.
+            </div>
+
+        {% else %}
+
+            <h5>Confirm Your Attendance</h5>
+
+            <hr>
+
+            <p>
+                <strong>Student:</strong>
+                {{ request.user.username }}
+            </p>
+
+            <p>
+                <strong>Classroom:</strong>
+                {{ session.classroom.name }}
+            </p>
+
+            <p>
+                <strong>Subject:</strong>
+                {{ session.subject.name }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ session.date }}
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-success btn-lg mt-3"
+                >
+                    Mark My Attendance
+                </button>
+
+            </form>
+
+        {% endif %}
+
+        <a href="{% url 'student_dashboard' %}"
+           class="btn btn-primary mt-3">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

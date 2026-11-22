@@ -1,0 +1,76 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-primary mb-4">Mark Student Attendance</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Select Student</label>
+                <select name="student" class="form-select" required>
+                    <option value="">Select Student</option>
+                    {% for student in students %}
+                    <option value="{{ student.id }}">
+                        {{ student.username }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Select Classroom</label>
+                <select name="classroom" class="form-select" required>
+                    <option value="">Select Classroom</option>
+                    {% for classroom in classrooms %}
+                    <option value="{{ classroom.id }}">
+                        {{ classroom.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Select Subject</label>
+                <select name="subject" class="form-select" required>
+                    <option value="">Select Subject</option>
+                    {% for subject in subjects %}
+                    <option value="{{ subject.id }}">
+                        {{ subject.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input type="date" name="date"
+                       class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Attendance Status</label>
+                <select name="status" class="form-select" required>
+                    <option value="">Select Status</option>
+                    <option value="PRESENT">Present</option>
+                    <option value="ABSENT">Absent</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Submit Attendance
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

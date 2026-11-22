@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">Attendance Records</h2>
+
+    <div class="card shadow p-3">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-primary">
+                    <tr>
+                        <th>Student</th>
+                        <th>Classroom</th>
+                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for record in records %}
+
+                    <tr>
+                        <td>{{ record.student.username }}</td>
+                        <td>{{ record.classroom.name }}</td>
+                        <td>{{ record.subject.name }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>
+                            {{ record.get_status_display }}
+                        </td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            No Attendance Records Found
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

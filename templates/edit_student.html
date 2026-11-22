@@ -1,0 +1,96 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-primary">Edit Student</h2>
+
+        <p class="text-muted">
+            Update student account details
+        </p>
+
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.user.username }}"
+                    readonly
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input
+                    type="text"
+                    name="first_name"
+                    class="form-control"
+                    value="{{ student.user.first_name }}"
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input
+                    type="text"
+                    name="last_name"
+                    class="form-control"
+                    value="{{ student.user.last_name }}"
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="{{ student.user.email }}"
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Select Classroom</label>
+
+                <select name="classroom" class="form-select">
+                    <option value="">Select Classroom</option>
+
+                    {% for classroom in classrooms %}
+                        <option
+                            value="{{ classroom.id }}"
+                            {% if student.classroom_id == classroom.id %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ classroom.name }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Update Student
+            </button>
+
+            <a href="/dashboard/students/"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

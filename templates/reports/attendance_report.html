@@ -1,0 +1,185 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Smart Attendance Analytics</h2>
+    {% if user.userprofile.role == 'TEACHER' %}
+
+<div class="card shadow p-3 mb-4">
+
+    <h5>Low Attendance Email Notification</h5>
+
+    <p>
+        Send email alerts to students whose attendance
+        is below 75%.
+    </p>
+
+    <form method="POST"
+          action="{% url 'send_attendance_alert' %}">
+
+        {% csrf_token %}
+
+        <button type="submit"
+                class="btn btn-warning"
+                onclick="return confirm('Are you sure you want to send low attendance email alerts?');">
+
+            Send Low Attendance Email Alerts
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endif %}
+    <!-- Attendance Summary Cards -->
+
+    <div class="row g-3">
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h5>Total Classes</h5>
+                <h2>{{ total_classes }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h5>Present Classes</h5>
+                <h2 class="text-success">{{ present_classes }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h5>Absent Classes</h5>
+                <h2 class="text-danger">{{ absent_classes }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h5>Attendance Percentage</h5>
+                <h2 class="text-primary">{{ percentage }}%</h2>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Low Attendance Alert -->
+
+    {% if low_attendance %}
+
+    <div class="alert alert-danger mt-4 text-center">
+
+        <h5>Low Attendance Alert!</h5>
+
+        <p>
+            Your attendance is below 75%.
+            Please attend more classes.
+        </p>
+
+    </div>
+
+    <!-- Attendance Recovery Planner -->
+
+    <div class="card shadow mt-4 p-4">
+
+        <h4 class="text-primary">
+            Attendance Recovery Planner
+        </h4>
+
+        <p>
+            You need to attend the next
+            <strong>{{ required_classes }}</strong>
+            consecutive classes to reach at least 75% attendance.
+        </p>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-success mt-4 text-center">
+
+        <h5>Good Attendance!</h5>
+
+        <p>Your attendance is 75% or above.</p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Subject-wise Analytics -->
+
+    <div class="card shadow mt-4 p-4">
+
+        <h4 class="text-primary mb-3">
+            Subject-wise Attendance Analytics
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover text-center">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Subject</th>
+                        <th>Total Classes</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Percentage</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for subject in subject_analytics %}
+
+                    <tr>
+
+                        <td>{{ subject.subject__name }}</td>
+
+                        <td>{{ subject.total }}</td>
+
+                        <td class="text-success">
+                            {{ subject.present }}
+                        </td>
+
+                        <td class="text-danger">
+                            {{ subject.absent }}
+                        </td>
+
+                        <td>
+                            <strong>{{ subject.percentage }}%</strong>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5">
+                            No attendance records available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">
+        Generate Attendance QR Code
+    </h2>
+
+    {% if qr_image %}
+
+        <div class="card shadow p-4 text-center">
+
+            <h4>Attendance QR Code</h4>
+
+            <p>
+                Subject: {{ session.subject.name }}
+            </p>
+
+            <p>
+                Classroom: {{ session.classroom.name }}
+            </p>
+
+            <p>
+                Date: {{ session.date }}
+            </p>
+
+            <div class="my-3">
+                <img
+                    src="data:image/png;base64,{{ qr_image }}"
+                    alt="Attendance QR Code"
+                    class="img-fluid"
+                    style="max-width: 300px;"
+                >
+            </div>
+
+            <p class="text-success">
+                QR Code Generated Successfully!
+            </p>
+
+        </div>
+
+    {% else %}
+
+        <div class="card shadow p-4">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Select Classroom
+                    </label>
+
+                    <select
+                        name="classroom"
+                        class="form-select"
+                        required
+                    >
+                        <option value="">
+                            Select Classroom
+                        </option>
+
+                        {% for classroom in classrooms %}
+                        <option value="{{ classroom.id }}">
+                            {{ classroom.name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Select Subject
+                    </label>
+
+                    <select
+                        name="subject"
+                        class="form-select"
+                        required
+                    >
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                        {% for subject in subjects %}
+                        <option value="{{ subject.id }}">
+                            {{ subject.name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Generate QR Code
+                </button>
+
+            </form>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

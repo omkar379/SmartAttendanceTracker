@@ -1,0 +1,245 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+    <!-- Dashboard Header -->
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+
+        <div>
+            <h2 class="fw-bold text-primary">
+                <i class="bi bi-speedometer2 me-2"></i>
+                Teacher Dashboard
+            </h2>
+
+            <p class="text-muted mb-0">
+                Welcome to Smart Attendance Tracker.
+                Manage your classes and attendance.
+            </p>
+        </div>
+
+        <span class="badge bg-primary p-2 mt-2">
+            <i class="bi bi-person-workspace me-1"></i>
+            Teacher
+        </span>
+
+    </div>
+
+
+    <!-- Dashboard Summary -->
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h5 class="fw-bold mb-2">
+            <i class="bi bi-grid-fill me-2 text-primary"></i>
+            Teacher Workspace
+        </h5>
+
+        <p class="text-muted mb-0">
+            Access all your teaching and attendance management features
+            from one place.
+        </p>
+
+    </div>
+
+
+    <!-- Teacher Features -->
+
+    <h4 class="fw-bold mb-3">Teacher Features</h4>
+
+    <div class="row g-4">
+
+        <!-- Mark Attendance -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4 text-center h-100">
+
+                <div class="mb-3">
+                    <i class="bi bi-clipboard-check-fill fs-1 text-primary"></i>
+                </div>
+
+                <h5 class="fw-bold">Mark Attendance</h5>
+
+                <p class="text-muted">
+                    Mark student attendance for your classes.
+                </p>
+
+                <a href="/attendance/mark/"
+                   class="btn btn-primary mt-auto">
+
+                    <i class="bi bi-check-circle me-1"></i>
+                    Mark Attendance
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- View Attendance -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4 text-center h-100">
+
+                <div class="mb-3">
+                    <i class="bi bi-card-list fs-1 text-success"></i>
+                </div>
+
+                <h5 class="fw-bold">View Attendance</h5>
+
+                <p class="text-muted">
+                    View student attendance records.
+                </p>
+
+                <a href="/attendance/view/"
+                   class="btn btn-success mt-auto">
+
+                    <i class="bi bi-eye me-1"></i>
+                    View Attendance
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Attendance Reports -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4 text-center h-100">
+
+                <div class="mb-3">
+                    <i class="bi bi-bar-chart-fill fs-1 text-info"></i>
+                </div>
+
+                <h5 class="fw-bold">Attendance Reports</h5>
+
+                <p class="text-muted">
+                    Check attendance reports and student performance.
+                </p>
+
+                <a href="/reports/attendance/"
+                   class="btn btn-info text-white mt-auto">
+
+                    <i class="bi bi-file-earmark-bar-graph me-1"></i>
+                    View Reports
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- QR Code Attendance -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4 text-center h-100">
+
+                <div class="mb-3">
+                    <i class="bi bi-qr-code fs-1 text-success"></i>
+                </div>
+
+                <h5 class="fw-bold">QR Code Attendance</h5>
+
+                <p class="text-muted">
+                    Generate QR codes for student attendance.
+                </p>
+
+                <a href="{% url 'generate_qr' %}"
+                   class="btn btn-success mt-auto">
+
+                    <i class="bi bi-qr-code-scan me-1"></i>
+                    Generate QR Code
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Weekly Timetable -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4 text-center h-100">
+
+                <div class="mb-3">
+                    <i class="bi bi-calendar-week fs-1 text-primary"></i>
+                </div>
+
+                <h5 class="fw-bold">Weekly Timetable</h5>
+
+                <p class="text-muted">
+                    View your weekly class schedule.
+                </p>
+
+                <a href="{% url 'teacher_timetable' %}"
+                   class="btn btn-primary mt-auto">
+
+                    <i class="bi bi-calendar3 me-1"></i>
+                    View Weekly Timetable
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Daily Timetable -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4 text-center h-100">
+
+                <div class="mb-3">
+                    <i class="bi bi-calendar-day fs-1 text-warning"></i>
+                </div>
+
+                <h5 class="fw-bold">Daily Timetable</h5>
+
+                <p class="text-muted">
+                    View today's lecture schedule and status.
+                </p>
+
+                <a href="{% url 'daily_timetable' %}"
+                   class="btn btn-warning mt-auto">
+
+                    <i class="bi bi-clock me-1"></i>
+                    View Daily Timetable
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+    }
+
+</style>
+
+{% endblock %}

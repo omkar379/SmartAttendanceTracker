@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Timetable</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .timetable-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #243b55;
+            font-weight: bold;
+        }
+
+        .table th {
+            background-color: #243b55;
+            color: white;
+        }
+
+        .back-btn {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'student_dashboard' %}"
+       class="btn btn-secondary back-btn">
+        Back to Dashboard
+    </a>
+
+    <div class="timetable-card">
+
+        <h2 class="text-center mb-4">
+            Student Weekly Timetable
+        </h2>
+
+        {% if error %}
+
+            <div class="alert alert-warning">
+                {{ error }}
+            </div>
+
+        {% elif timetable %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover text-center">
+
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Subject</th>
+                            <th>Classroom</th>
+                            <th>Teacher</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in timetable %}
+
+                        <tr>
+                            <td>{{ item.get_day_display }}</td>
+                            <td>{{ item.subject.name }}</td>
+                            <td>{{ item.classroom.name }}</td>
+                            <td>{{ item.teacher.username }}</td>
+                            <td>{{ item.start_time|time:"h:i A" }}</td>
+                            <td>{{ item.end_time|time:"h:i A" }}</td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="alert alert-info text-center">
+                No timetable available for your classroom.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
